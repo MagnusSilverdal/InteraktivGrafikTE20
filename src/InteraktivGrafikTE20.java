@@ -36,6 +36,7 @@ public class InteraktivGrafikTE20 extends Canvas implements Runnable {
     int vy = 1;
 
     private BufferedImage spriteimg;
+    private BufferedImage iconimg;
 
     /**
      * Skapa ett fönster och lägg in grafiken i det.
@@ -58,8 +59,18 @@ public class InteraktivGrafikTE20 extends Canvas implements Runnable {
         this.requestFocus();
         // Läs in en bild
         try {
-            spriteimg = ImageIO.read(new File("filename.png"));
+            spriteimg = ImageIO.read(getClass().getResource("filename.png"));
+            iconimg = ImageIO.read(getClass().getResource("Ikon.png"));
+
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        frame.setIconImage(iconimg);
+        TrayIcon trayIcon = new TrayIcon(iconimg);
+        SystemTray tray = SystemTray.getSystemTray();
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException e) {
             e.printStackTrace();
         }
     }
@@ -134,6 +145,10 @@ public class InteraktivGrafikTE20 extends Canvas implements Runnable {
      */
     private void draw(Graphics g) {
         g.drawImage(spriteimg, x, y, 4*spriteimg.getWidth(), 4* spriteimg.getHeight(),null);
+        g.setColor(Color.RED);
+        g.fillRect(100,100,100,100);
+        g.setColor(new Color(0xc8c8c8c8,true));
+        g.fillRect(150,150,100,100);
     }
 
     /**
